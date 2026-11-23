@@ -1,0 +1,14 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended"],
+  "kubernetes": { "managerFilePatterns": ["/^apps/.+\\.yaml$/"] },
+  "packageRules": [
+    { "matchPackageNames": ["mongo"], "allowedVersions": "<8" },
+    { "matchPackageNames": ["postgres"], "allowedVersions": "<18" },
+    {
+      "matchPackageNames": ["ghcr.io/zuramai/nulis", "ghcr.io/devoverid/siti"],
+      "automerge": true,
+      "automergeType": "branch"
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nulis
+  annotations:
+    secret.reloader.stakater.com/reload: "nulis-secrets"   # restart when Infisical values change
+spec:
+  replicas: 1
+  selector:
+    matchLabels: { app: nulis }
+  template:
+    metadata:
+      labels: { app: nulis }
+    spec:
+      containers:
+        - name: nulis
+          image: ghcr.io/zuramai/nulis:1.0.0
+          ports: [{ containerPort: 3000 }]
+          env:
+            # NUXT_MONGODB_URI contains a password, so it comes from nulis-secrets (Infisical, 11.4).
+            # Behind Cloudflare + Traefik the app sees plain HTTP; pin the OAuth callback.
+            - name: NUXT_OAUTH_GITHUB_REDIRECT_URL
+              value: https://nulis.yourdomain.com/auth/github
+          envFrom:
+            - secretRef: { name: nulis-secrets }
+          readinessProbe:
+            httpGet: { path: /api/auth/status, port: 3000 }
+          livenessProbe:
+            httpGet: { path: /api/auth/status, port: 3000 }
+            initialDelaySeconds: 20
+          resources:
+            requests: { cpu: 50m, memory: 128Mi }
+            limits: { memory: 512Mi }
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nulis
+spec:
+  selector: { app: nulis }
+  ports: [{ port: 3000 }]
