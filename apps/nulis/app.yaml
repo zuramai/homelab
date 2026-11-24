@@ -20,7 +20,7 @@ spec:
             # NUXT_MONGODB_URI contains a password, so it comes from nulis-secrets (Infisical, 11.4).
             # Behind Cloudflare + Traefik the app sees plain HTTP; pin the OAuth callback.
             - name: NUXT_OAUTH_GITHUB_REDIRECT_URL
-              value: https://nulis.yourdomain.com/auth/github
+              value: https://nulis.saugi.me/auth/github
           envFrom:
             - secretRef: { name: nulis-secrets }
           readinessProbe:

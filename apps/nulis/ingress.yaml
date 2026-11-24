@@ -5,7 +5,7 @@ metadata:
 spec:
   ingressClassName: traefik
   rules:
-    - host: nulis.yourdomain.com
+    - host: nulis.saugi.me
       http:
         paths:
           - path: /
