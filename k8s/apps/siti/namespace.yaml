@@ -2,5 +2,8 @@ apiVersion: v1
 kind: Namespace
 metadata:
   name: siti
+  annotations:
+    # Never prune the namespace: host-created secrets (infisical-auth) live here.
+    argocd.argoproj.io/sync-options: Prune=false
   labels:
     homelab/db-access: "true"

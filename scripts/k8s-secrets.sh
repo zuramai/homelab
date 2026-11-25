@@ -46,6 +46,8 @@ DATABASE_URL="postgres://siti:${SITI_DB_PW}@postgres.databases.svc.cluster.local
   printf 'NUXT_SESSION_PASSWORD=%q\n'    "$NUXT_SESSION_PASSWORD"
   printf 'NUXT_ENCRYPTION_KEY=%q\n'      "$NUXT_ENCRYPTION_KEY"
   printf 'DATABASE_URL=%q\n'             "$DATABASE_URL"
+  printf 'INFISICAL_CLIENT_ID=%q\n'      "$INFISICAL_CLIENT_ID"
+  printf 'INFISICAL_CLIENT_SECRET=%q\n'  "$INFISICAL_CLIENT_SECRET"
 } > "$OUT"
 chmod 600 "$OUT"
 
