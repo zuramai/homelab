@@ -1,0 +1,570 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jakarta to the Silk Road — Budget Field Plan 2027</title>
+<style>
+  @page { size: A4; margin: 0; }
+  * { box-sizing: border-box; }
+  :root {
+    --ink: #173331;
+    --deep: #102d2b;
+    --teal: #176b62;
+    --mint: #dff2e8;
+    --lime: #dcef87;
+    --coral: #ed7c62;
+    --sand: #f3efe5;
+    --paper: #fbfaf6;
+    --line: #d7ded6;
+    --muted: #667772;
+    --white: #ffffff;
+  }
+  html, body { margin: 0; padding: 0; background: #d8ddd8; color: var(--ink); font-family: "Noto Sans", "DejaVu Sans", sans-serif; font-size: 10px; line-height: 1.45; }
+  .page { width: 210mm; height: 297mm; padding: 15mm 16mm 15mm; margin: 0 auto 8mm; position: relative; overflow: hidden; background: var(--paper); page-break-after: always; }
+  .page:last-child { page-break-after: auto; }
+  .cover { color: #f7f8ee; background: var(--deep); }
+  .cover:before { content: ""; position: absolute; width: 140mm; height: 140mm; border: 1px solid rgba(220,239,135,.17); border-radius: 50%; right: -66mm; top: -54mm; box-shadow: 0 0 0 17mm rgba(220,239,135,.025), 0 0 0 34mm rgba(220,239,135,.02); }
+  .cover:after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 8mm; background: var(--lime); }
+  .serif { font-family: "Noto Serif", "DejaVu Serif", serif; }
+  .eyebrow { color: var(--teal); font-size: 8px; font-weight: 800; letter-spacing: 1.8px; text-transform: uppercase; margin-bottom: 3mm; }
+  .cover .eyebrow { color: var(--lime); }
+  h1, h2, h3, h4, p { margin-top: 0; }
+  h1 { font-size: 46px; line-height: 1.04; letter-spacing: -1.8px; margin-bottom: 6mm; }
+  h2 { font-size: 25px; line-height: 1.13; letter-spacing: -.7px; margin-bottom: 3mm; }
+  h3 { font-size: 13px; line-height: 1.25; margin-bottom: 2mm; }
+  h4 { font-size: 10px; margin-bottom: 1mm; }
+  p { margin-bottom: 2.5mm; }
+  .subtitle { color: var(--muted); font-size: 11px; max-width: 155mm; margin-bottom: 6mm; }
+  .cover .subtitle { color: #bfd1c7; font-size: 13px; max-width: 135mm; }
+  .head { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 1px solid var(--line); padding-bottom: 4mm; margin-bottom: 5mm; }
+  .head .section-no { color: var(--teal); font-size: 9px; font-weight: 800; letter-spacing: 1px; padding-top: 2mm; }
+  .footer { position: absolute; bottom: 7mm; left: 16mm; right: 16mm; display: flex; justify-content: space-between; color: #75817c; font-size: 7.5px; letter-spacing: .25px; }
+  .cover .footer { color: #aec2b8; bottom: 12mm; }
+  .page-no { font-weight: 800; color: var(--teal); }
+  .cover .page-no { color: var(--lime); }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 4mm; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3.5mm; }
+  .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3mm; }
+  .span-2 { grid-column: span 2; }
+  .card { background: var(--white); border: 1px solid var(--line); border-radius: 10px; padding: 4mm; margin-bottom: 3.5mm; break-inside: avoid; }
+  .card.soft { background: var(--sand); border-color: transparent; }
+  .card.mint { background: var(--mint); border-color: transparent; }
+  .card.dark { background: var(--deep); color: white; border-color: var(--deep); }
+  .card.coral { background: #fff0ea; border-color: #f4c4b6; }
+  .card.lime { background: #f2f7d9; border-color: #dbe6a7; }
+  .card h3:last-child, .card p:last-child { margin-bottom: 0; }
+  .label { display: block; color: var(--muted); font-size: 7.5px; font-weight: 800; letter-spacing: .9px; text-transform: uppercase; margin-bottom: 1.5mm; }
+  .big { font-size: 28px; font-weight: 800; letter-spacing: -1px; line-height: 1.05; }
+  .metric { font-size: 20px; font-weight: 800; line-height: 1.1; }
+  .small { font-size: 8.5px; line-height: 1.45; }
+  .tiny { font-size: 7.5px; line-height: 1.4; }
+  .muted { color: var(--muted); }
+  .teal { color: var(--teal); }
+  .coral-text { color: #b64e39; }
+  .bold { font-weight: 800; }
+  .caps { text-transform: uppercase; letter-spacing: .8px; font-size: 8px; font-weight: 800; }
+  .badge { display: inline-block; padding: 1mm 2mm; border-radius: 99px; background: var(--mint); color: var(--teal); font-size: 7px; font-weight: 800; letter-spacing: .45px; text-transform: uppercase; white-space: nowrap; }
+  .badge.coral { background: #ffe4dc; color: #a64632; }
+  .badge.sand { background: var(--sand); color: var(--muted); }
+  .badge.lime { background: var(--lime); color: var(--deep); }
+  .tags { display: flex; gap: 1.5mm; flex-wrap: wrap; }
+  .rule { border: 0; border-top: 1px solid var(--line); margin: 4mm 0; }
+  .note { border-left: 3px solid var(--teal); padding: 2mm 3mm; background: var(--mint); border-radius: 0 7px 7px 0; }
+  .warning { border-left-color: var(--coral); background: #fff0ea; }
+  table { width: 100%; border-collapse: collapse; font-size: 8.5px; line-height: 1.35; }
+  th { color: var(--muted); background: #edf1eb; text-align: left; font-size: 7px; letter-spacing: .55px; text-transform: uppercase; padding: 2.2mm 2mm; border-bottom: 1px solid var(--line); }
+  td { padding: 2.2mm 2mm; border-bottom: 1px solid #e5e9e3; vertical-align: top; }
+  tr:last-child td { border-bottom: 0; }
+  .num { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .total-row td { background: var(--deep); color: white; font-weight: 800; font-size: 10px; border: 0; }
+  .total-row td:first-child { border-radius: 7px 0 0 7px; }
+  .total-row td:last-child { border-radius: 0 7px 7px 0; }
+  .cover-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24mm; }
+  .brand-mark { display: flex; gap: 2mm; align-items: center; font-size: 8px; font-weight: 800; letter-spacing: 1.4px; text-transform: uppercase; }
+  .brand-dot { width: 7mm; height: 7mm; border-radius: 50%; background: var(--lime); position: relative; }
+  .brand-dot:after { content: ""; position: absolute; width: 3mm; height: 3mm; background: var(--coral); border-radius: 50%; right: -1mm; bottom: -1mm; }
+  .cover-date { border: 1px solid #46615b; border-radius: 99px; padding: 1.5mm 3mm; color: #d8e3d8; font-size: 8px; }
+  .cover-route { display: flex; align-items: center; gap: 2mm; color: var(--lime); font-size: 10px; font-weight: 800; letter-spacing: .6px; margin: 8mm 0 10mm; }
+  .cover-route .arrow { color: #8ca49a; }
+  .cover-bottom { display: grid; grid-template-columns: 1.35fr .65fr; gap: 6mm; align-items: end; }
+  .budget-panel { border-top: 1px solid #49645d; padding-top: 5mm; }
+  .budget-panel .amount { color: var(--lime); font-size: 35px; font-weight: 800; letter-spacing: -1.2px; line-height: 1; margin: 2mm 0; }
+  .cover-stat { background: #183b37; border: 1px solid #3b5a52; border-radius: 12px; padding: 5mm; }
+  .cover-stat .metric { color: var(--lime); font-size: 31px; }
+  .mountains { position: absolute; bottom: 8mm; left: 0; right: 0; height: 47mm; opacity: .19; }
+  .route-line { display: grid; grid-template-columns: repeat(7, 1fr); position: relative; gap: 0; margin: 7mm 0 6mm; }
+  .route-line:before { content: ""; position: absolute; left: 6%; right: 6%; top: 4mm; height: 2px; background: #b8cabe; }
+  .route-city { text-align: center; position: relative; z-index: 1; }
+  .route-city .dot { width: 8mm; height: 8mm; border: 2px solid var(--teal); background: var(--paper); border-radius: 50%; margin: 0 auto 2mm; position: relative; }
+  .route-city.start .dot, .route-city.end .dot { background: var(--lime); border-color: var(--deep); }
+  .route-city .city { font-size: 8px; font-weight: 800; }
+  .route-city .country { font-size: 6.5px; color: var(--muted); text-transform: uppercase; letter-spacing: .4px; }
+  .day-card { padding: 3.2mm 3.5mm; margin-bottom: 3mm; position: relative; min-height: 31mm; }
+  .day-head { display: flex; align-items: center; gap: 2mm; margin-bottom: 1.5mm; }
+  .day-no { min-width: 11mm; background: var(--deep); color: white; border-radius: 5px; padding: 1mm 1.5mm; text-align: center; font-size: 7.5px; font-weight: 800; letter-spacing: .5px; }
+  .day-date { color: var(--muted); font-size: 7.5px; }
+  .day-title { font-size: 10.5px; font-weight: 800; line-height: 1.25; margin-bottom: 1mm; }
+  .day-card p { font-size: 8px; color: #4f625c; margin-bottom: 1.5mm; }
+  .sleep { font-size: 7px; color: var(--teal); font-weight: 800; text-transform: uppercase; letter-spacing: .4px; }
+  .day-card.free { background: #f2f7d9; border-color: #dbe6a7; }
+  .checklist { list-style: none; padding: 0; margin: 0; }
+  .checklist li { position: relative; padding-left: 5mm; margin-bottom: 2mm; }
+  .checklist li:before { content: "✓"; position: absolute; left: 0; color: var(--teal); font-weight: 900; }
+  .steps { list-style: none; padding: 0; margin: 0; counter-reset: step; }
+  .steps li { counter-increment: step; position: relative; padding-left: 11mm; margin-bottom: 4mm; }
+  .steps li:before { content: counter(step, decimal-leading-zero); position: absolute; left: 0; top: 0; color: var(--teal); font-size: 12px; font-weight: 800; }
+  .fare { text-align: center; padding: 4mm 2.5mm; }
+  .fare .price { font-size: 18px; font-weight: 800; color: var(--teal); white-space: nowrap; }
+  .source-list { list-style: none; padding: 0; margin: 0; counter-reset: src; columns: 2; column-gap: 6mm; }
+  .source-list li { counter-increment: src; position: relative; padding-left: 7mm; margin-bottom: 3mm; break-inside: avoid; font-size: 7.5px; }
+  .source-list li:before { content: counter(src); position: absolute; left: 0; top: .2mm; width: 4.5mm; height: 4.5mm; line-height: 4.5mm; text-align: center; border-radius: 50%; background: var(--mint); color: var(--teal); font-weight: 800; }
+  a { color: var(--teal); text-decoration: none; }
+  .closing { background: var(--deep); color: white; border-radius: 13px; padding: 7mm; margin-top: 5mm; position: relative; overflow: hidden; }
+  .closing:after { content: "→"; position: absolute; right: 4mm; bottom: -11mm; color: rgba(220,239,135,.12); font-size: 80px; font-weight: 800; }
+  .closing h3 { color: var(--lime); font-size: 17px; }
+  .closing p { max-width: 145mm; color: #d3e1d7; }
+  .balanced .card { padding: 5mm; margin-bottom: 4mm; }
+  .balanced .day-card { min-height: 44mm; padding: 4mm; }
+  .balanced td { padding: 3mm 2mm; }
+  .balanced th { padding: 3mm 2mm; }
+  .balanced .note { padding: 3mm 4mm; }
+  @media print {
+    html, body { background: white; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .page { margin: 0; box-shadow: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- 01 COVER -->
+<section class="page cover">
+  <div class="cover-top">
+    <div class="brand-mark"><span class="brand-dot"></span><span>Backpacker field plan</span></div>
+    <div class="cover-date">18 MAR — 04 APR 2027</div>
+  </div>
+  <div class="eyebrow">Jakarta · East Asia · Central Asia</div>
+  <h1 class="serif">Silk Road,<br>on a shoestring.</h1>
+  <p class="subtitle">An 18-day, carry-on-only journey through Hong Kong, Kazakhstan, Kyrgyzstan and Uzbekistan—built around cheap beds, night transport and honest financial limits.</p>
+  <div class="cover-route">
+    <span>CGK</span><span class="arrow">→</span><span>HKG</span><span class="arrow">→</span><span>ALA</span><span class="arrow">→</span><span>FRU</span><span class="arrow">→</span><span>TAS</span><span class="arrow">→</span><span>SKD</span><span class="arrow">→</span><span>BHK</span>
+  </div>
+  <div class="cover-bottom">
+    <div class="budget-panel">
+      <span class="label" style="color:#a9c0b5">Planned spend · per person</span>
+      <div class="amount">Rp23.16M</div>
+      <div class="small" style="color:#bfd1c7">+ Rp1.84M insurance & emergency reserve<br><strong style="color:white">Hard ceiling: Rp25.00M</strong></div>
+    </div>
+    <div class="cover-stat">
+      <span class="label" style="color:#a9c0b5">The journey</span>
+      <div class="metric">18</div>
+      <div class="caps" style="color:white">days</div>
+      <hr style="border:0;border-top:1px solid #3b5a52;margin:3mm 0">
+      <div class="small" style="color:#bfd1c7">4 destinations<br>13 paid beds<br>1 cabin bag</div>
+    </div>
+  </div>
+  <svg class="mountains" viewBox="0 0 800 180" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0 180 L0 144 L85 91 L137 128 L229 40 L298 119 L365 75 L442 137 L526 45 L583 92 L650 29 L735 121 L800 73 L800 180 Z" fill="#dcef87"/>
+    <path d="M0 180 L0 165 L116 125 L180 151 L279 96 L350 146 L457 103 L537 157 L635 99 L707 148 L800 117 L800 180 Z" fill="#ed7c62"/>
+  </svg>
+  <div class="footer"><span>Prepared 25 November 2026 · Planning estimates, not fare guarantees</span><span class="page-no">01 / 11</span></div>
+</section>
+
+<!-- 02 STRATEGY -->
+<section class="page balanced">
+  <div class="head"><div><div class="eyebrow">01 · Trip strategy</div><h2 class="serif">Maximum journey.<br>Minimum backtracking.</h2></div><div class="section-no">THE BIG PICTURE</div></div>
+  <p class="subtitle">Keep Hong Kong and the three Central Asian highlights. Skip the legs that consume the reserve without improving the journey.</p>
+  <div class="route-line">
+    <div class="route-city start"><div class="dot"></div><div class="city">Jakarta</div><div class="country">Start</div></div>
+    <div class="route-city"><div class="dot"></div><div class="city">Hong Kong</div><div class="country">2 days</div></div>
+    <div class="route-city"><div class="dot"></div><div class="city">Almaty</div><div class="country">4 nights</div></div>
+    <div class="route-city"><div class="dot"></div><div class="city">Bishkek</div><div class="country">3 nights</div></div>
+    <div class="route-city"><div class="dot"></div><div class="city">Tashkent</div><div class="country">1 night</div></div>
+    <div class="route-city"><div class="dot"></div><div class="city">Samarkand</div><div class="country">2 nights</div></div>
+    <div class="route-city end"><div class="dot"></div><div class="city">Bukhara</div><div class="country">2 nights</div></div>
+  </div>
+  <div class="grid-4">
+    <div class="card soft"><span class="label">Duration</span><div class="metric">18 days</div><span class="small muted">18 Mar–4 Apr</span></div>
+    <div class="card soft"><span class="label">Free sleeps</span><div class="metric">4 nights</div><span class="small muted">Airport, bus, train, plane</span></div>
+    <div class="card soft"><span class="label">Flight budget</span><div class="metric">Rp12.5M</div><span class="small muted">Three international legs</span></div>
+    <div class="card soft"><span class="label">Daily style</span><div class="metric">Local</div><span class="small muted">Dorms, canteens, buses</span></div>
+  </div>
+  <div class="grid-2" style="margin-top:4mm">
+    <div class="card mint">
+      <span class="label">Included</span>
+      <h3>The highest-value route</h3>
+      <ul class="checklist small">
+        <li>Hong Kong’s free harbour-and-city highlights</li>
+        <li>Nauryz festivities in Almaty</li>
+        <li>Ala-Archa’s mountain scenery</li>
+        <li>Tashkent, Samarkand and Bukhara</li>
+        <li>Overland border crossings and night transport</li>
+      </ul>
+    </div>
+    <div class="card coral">
+      <span class="label">Excluded by design</span>
+      <h3>What does not fit</h3>
+      <ul class="checklist small">
+        <li><strong>Mainland China:</strong> visa + two extra days</li>
+        <li><strong>Beijing:</strong> another long-distance leg</li>
+        <li><strong>Dushanbe:</strong> detour and backtracking</li>
+        <li><strong>Brunei:</strong> optional only on a cheap through-ticket</li>
+        <li><strong>Checked luggage:</strong> potential Rp0.8–1.5M extra</li>
+      </ul>
+    </div>
+  </div>
+  <div class="note small" style="margin-top:4mm"><strong>Timing advantage.</strong> The dates avoid Indonesia’s Lebaran fare spike, align with Cathay’s Tuesday/Thursday/Saturday Hong Kong–Almaty schedule, and reach Almaty for Nauryz on 21 March.</div>
+  <div class="card" style="margin-top:4mm">
+    <span class="label">Assumptions</span>
+    <p class="small">One traveller · Indonesian ordinary passport · 7–10 kg cabin baggage · dorm beds · public transport · approximately Rp18,200/USD. Flight numbers are <strong>booking ceilings</strong>, not guaranteed exact-date quotes.</p>
+  </div>
+  <div class="footer"><span>Jakarta to the Silk Road · Budget Field Plan</span><span class="page-no">02 / 11</span></div>
+</section>
+
+<!-- 03 ITINERARY I -->
+<section class="page balanced">
+  <div class="head"><div><div class="eyebrow">02 · Day-by-day</div><h2 class="serif">Hong Kong to Almaty</h2></div><div class="section-no">DAYS 01—06</div></div>
+  <p class="subtitle">Two efficient city days, one airport night, then four nights in Kazakhstan during its spring celebration.</p>
+  <div class="grid-2">
+    <div class="card day-card">
+      <div class="day-head"><span class="day-no">D01</span><span class="day-date">THU · 18 MAR</span></div>
+      <div class="day-title">Jakarta → Hong Kong</div>
+      <p>Fly to HKG. Take the airport bus to Sham Shui Po; explore street markets and eat at a local cooked-food centre.</p>
+      <div class="sleep">Sleep · Hong Kong hostel</div>
+    </div>
+    <div class="card day-card free">
+      <div class="day-head"><span class="day-no">D02</span><span class="day-date">FRI · 19 MAR</span></div>
+      <div class="day-title">Harbour on foot</div>
+      <p>Star Ferry, Central, Tsim Sha Tsui and Victoria Harbour. Walk up Victoria Peak rather than paying for the tram. Overnight at HKG.</p>
+      <div class="sleep">Free sleep · Airport landside</div>
+    </div>
+    <div class="card day-card">
+      <div class="day-head"><span class="day-no">D03</span><span class="day-date">SAT · 20 MAR</span></div>
+      <div class="day-title">Fly into Central Asia</div>
+      <p>Published CX681: Hong Kong 16:25 → Almaty 20:30. Reconfirm the schedule before booking. Airport bus or Yandex to the hostel.</p>
+      <div class="sleep">Sleep · Almaty</div>
+    </div>
+    <div class="card day-card free">
+      <div class="day-head"><span class="day-no">D04</span><span class="day-date">SUN · 21 MAR</span></div>
+      <div class="day-title">Nauryz in Almaty</div>
+      <p>Join public Nauryz festivities, then visit Panfilov Park, Zenkov Cathedral and Green Bazaar. A high-value, mostly free day.</p>
+      <div class="sleep">Sleep · Almaty</div>
+    </div>
+    <div class="card day-card">
+      <div class="day-head"><span class="day-no">D05</span><span class="day-date">MON · 22 MAR</span></div>
+      <div class="day-title">Medeu without the splurge</div>
+      <p>Take the city bus toward Medeu and enjoy the foothills. Skip the Shymbulak cable car unless the reserve remains intact.</p>
+      <div class="sleep">Sleep · Almaty</div>
+    </div>
+    <div class="card day-card">
+      <div class="day-head"><span class="day-no">D06</span><span class="day-date">TUE · 23 MAR</span></div>
+      <div class="day-title">Slow city, cheap views</div>
+      <p>Arbat, bazaars and Kok-Tobe on foot. Charyn Canyon is optional and deliberately excluded from the base budget.</p>
+      <div class="sleep">Sleep · Almaty</div>
+    </div>
+  </div>
+  <div class="note warning small" style="margin-top:3mm"><strong>Airport-night reality.</strong> HKG is open 24 hours, but landside seats are noisy and often have armrests. Bring earplugs and an eye mask. A second hostel night adds about Rp450K.</div>
+  <div class="footer"><span>Itinerary · Hong Kong → Almaty</span><span class="page-no">03 / 11</span></div>
+</section>
+
+<!-- 04 ITINERARY II -->
+<section class="page balanced">
+  <div class="head"><div><div class="eyebrow">02 · Day-by-day</div><h2 class="serif">Mountains to the Silk Road</h2></div><div class="section-no">DAYS 07—12</div></div>
+  <p class="subtitle">Two land borders, a mountain day and a night bus reposition you from Kazakhstan to Uzbekistan.</p>
+  <div class="grid-2">
+    <div class="card day-card">
+      <div class="day-head"><span class="day-no">D07</span><span class="day-date">WED · 24 MAR</span></div>
+      <div class="day-title">Almaty → Bishkek</div>
+      <p>Morning bus from Sayran through Qorday. Take every bag through immigration. Evening at Ala-Too Square and Osh Bazaar.</p>
+      <div class="sleep">Sleep · Bishkek</div>
+    </div>
+    <div class="card day-card">
+      <div class="day-head"><span class="day-no">D08</span><span class="day-date">THU · 25 MAR</span></div>
+      <div class="day-title">Bishkek, local style</div>
+      <p>Explore Osh Bazaar, central squares and neighbourhood canteens. Confirm your Tashkent bus and terminal location today.</p>
+      <div class="sleep">Sleep · Bishkek</div>
+    </div>
+    <div class="card day-card free">
+      <div class="day-head"><span class="day-no">D09</span><span class="day-date">FRI · 26 MAR</span></div>
+      <div class="day-title">Ala-Archa day trip</div>
+      <p>Use the city bus and park shuttle. March snow means choosing the river or waterfall trail only if conditions are safe.</p>
+      <div class="sleep">Sleep · Bishkek</div>
+    </div>
+    <div class="card day-card free">
+      <div class="day-head"><span class="day-no">D10</span><span class="day-date">SAT · 27 MAR</span></div>
+      <div class="day-title">Night bus to Tashkent</div>
+      <p>Slow morning and food preparation. Depart around 19:00 from the temporary terminal; cross Kyrgyzstan–Kazakhstan–Uzbekistan borders overnight.</p>
+      <div class="sleep">Free sleep · Overnight bus</div>
+    </div>
+    <div class="card day-card">
+      <div class="day-head"><span class="day-no">D11</span><span class="day-date">SUN · 28 MAR</span></div>
+      <div class="day-title">Tashkent essentials</div>
+      <p>Chorsu Bazaar, Hazrati Imam and the city’s ornate metro stations. Use the metro rather than airport or station taxi touts.</p>
+      <div class="sleep">Sleep · Tashkent</div>
+    </div>
+    <div class="card day-card">
+      <div class="day-head"><span class="day-no">D12</span><span class="day-date">MON · 29 MAR</span></div>
+      <div class="day-title">Ordinary train to Samarkand</div>
+      <p>Take Sharq or another cheaper service. Settle into the old town, then enjoy the Registan exterior and evening atmosphere.</p>
+      <div class="sleep">Sleep · Samarkand</div>
+    </div>
+  </div>
+  <div class="grid-2" style="margin-top:3mm">
+    <div class="card soft small"><span class="label">Border habit</span><strong>Passport, e-Visa and QazETA stay on your person</strong>—never in the bus luggage hold. Carry small KZT and UZS notes for roadside stops.</div>
+    <div class="card soft small"><span class="label">Mountain habit</span><strong>Check the shuttle and weather before leaving.</strong> Early spring trails can be snowy, cold and avalanche-prone above the easy routes.</div>
+  </div>
+  <div class="footer"><span>Itinerary · Almaty → Samarkand</span><span class="page-no">04 / 11</span></div>
+</section>
+
+<!-- 05 ITINERARY III -->
+<section class="page balanced">
+  <div class="head"><div><div class="eyebrow">02 · Day-by-day</div><h2 class="serif">Samarkand, Bukhara, home</h2></div><div class="section-no">DAYS 13—18</div></div>
+  <p class="subtitle">Concentrate paid entries on the monuments that matter most. Use a sleeper train for the return to Tashkent.</p>
+  <div class="grid-2">
+    <div class="card day-card">
+      <div class="day-head"><span class="day-no">D13</span><span class="day-date">TUE · 30 MAR</span></div>
+      <div class="day-title">Samarkand’s greatest hits</div>
+      <p>Registan and Gur-e-Amir, Bibi-Khanym exterior and Siyob Bazaar. Add Shah-i-Zinda only if the daily allowance remains.</p>
+      <div class="sleep">Sleep · Samarkand</div>
+    </div>
+    <div class="card day-card">
+      <div class="day-head"><span class="day-no">D14</span><span class="day-date">WED · 31 MAR</span></div>
+      <div class="day-title">Train to Bukhara</div>
+      <p>Travel on a cheaper ordinary service. Spend the afternoon around Lyabi-Hauz, the old lanes and covered trading domes.</p>
+      <div class="sleep">Sleep · Bukhara</div>
+    </div>
+    <div class="card day-card">
+      <div class="day-head"><span class="day-no">D15</span><span class="day-date">THU · 01 APR</span></div>
+      <div class="day-title">Old Bukhara</div>
+      <p>Visit the Ark fortress, see the Kalon complex, Chor Minor and old-town sunset. Much of the city’s appeal is free to walk.</p>
+      <div class="sleep">Sleep · Bukhara</div>
+    </div>
+    <div class="card day-card free">
+      <div class="day-head"><span class="day-no">D16</span><span class="day-date">FRI · 02 APR</span></div>
+      <div class="day-title">Sleeper back to Tashkent</div>
+      <p>Slow morning, then choose an evening night train around 21:35–23:15. Book the sleeper as soon as the sales window opens.</p>
+      <div class="sleep">Free bed · Night train</div>
+    </div>
+    <div class="card day-card free">
+      <div class="day-head"><span class="day-no">D17</span><span class="day-date">SAT · 03 APR</span></div>
+      <div class="day-title">Tashkent → Jakarta</div>
+      <p>Fly home, preferably on a single TAS–KUL–CGK booking. Keep the fare below Rp5.75M and avoid unprotected tight self-transfers.</p>
+      <div class="sleep">Free sleep · Plane / airport</div>
+    </div>
+    <div class="card day-card">
+      <div class="day-head"><span class="day-no">D18</span><span class="day-date">SUN · 04 APR</span></div>
+      <div class="day-title">Arrive Jakarta</div>
+      <p>End of the 18-day route. Keep any untouched reserve as the trip’s final saving—not a reason for a last-day shopping spree.</p>
+      <div class="sleep">Journey complete</div>
+    </div>
+  </div>
+  <div class="card mint" style="margin-top:4mm">
+    <span class="label">Best free experiences</span>
+    <div class="tags"><span class="badge">Registan exterior</span><span class="badge">Lyabi-Hauz</span><span class="badge">Trading domes</span><span class="badge">Tashkent metro</span><span class="badge">Old-town walks</span></div>
+  </div>
+  <div class="note small" style="margin-top:4mm"><strong>Train fallback.</strong> If the night sleeper is unavailable, take a late ordinary train and add one Tashkent dorm night. The Rp1.84M reserve covers this without changing the route.</div>
+  <div class="footer"><span>Itinerary · Samarkand → Jakarta</span><span class="page-no">05 / 11</span></div>
+</section>
+
+<!-- 06 TRANSPORT -->
+<section class="page balanced">
+  <div class="head"><div><div class="eyebrow">03 · Transport blueprint</div><h2 class="serif">Book the long legs first.</h2></div><div class="section-no">COST & LOGISTICS</div></div>
+  <table>
+    <thead><tr><th>From → to</th><th>Mode</th><th>Typical time</th><th class="num">Budget</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Jakarta → Hong Kong</strong></td><td>Flight</td><td>5–10 h</td><td class="num"><strong>Rp2.50M</strong></td></tr>
+      <tr><td><strong>Hong Kong → Almaty</strong></td><td>Direct flight</td><td>≈ 7 h</td><td class="num"><strong>Rp4.25M</strong></td></tr>
+      <tr><td>Almaty → Bishkek</td><td>Direct bus · Sayran</td><td>5.5 h + border</td><td class="num">Rp130K</td></tr>
+      <tr><td>Bishkek → Tashkent</td><td>Overnight bus</td><td>8–13 h</td><td class="num">Rp460K</td></tr>
+      <tr><td>Tashkent → Samarkand</td><td>Sharq / ordinary train</td><td>≈ 3 h</td><td class="num">Rp310K</td></tr>
+      <tr><td>Samarkand → Bukhara</td><td>Ordinary train</td><td>≈ 2.5 h</td><td class="num">Rp260K</td></tr>
+      <tr><td>Bukhara → Tashkent</td><td>Night sleeper</td><td>7.5–8 h</td><td class="num">Rp600K</td></tr>
+      <tr><td><strong>Tashkent → Jakarta</strong></td><td>Flight via KUL</td><td>10–16 h</td><td class="num"><strong>Rp5.75M</strong></td></tr>
+      <tr><td>All local transport</td><td>Bus · metro · walking · limited Yandex</td><td>18 days</td><td class="num">Rp650K</td></tr>
+    </tbody>
+  </table>
+  <div class="grid-3" style="margin-top:5mm">
+    <div class="card soft"><span class="label">Almaty → Bishkek</span><p class="small">Current fare: 3,000–3,325 KZT. Several daily departures. Take all luggage off at Qorday; onward marshrutkas are available if the bus is delayed.</p><a class="tiny bold" href="https://backpackmoments.com/how-to-get-from-almaty-to-bishkek-by-bus">2026 bus guide ↗</a></div>
+    <div class="card soft"><span class="label">Bishkek → Tashkent</span><p class="small">Around 2,200 KGS. Usually 19:00 from the temporary terminal outside the centre. Buy a day early and expect two border crossings.</p><a class="tiny bold" href="https://www.journalofnomads.com/how-to-get-from-bishkek-to-tashkent-by-bus/">Updated 2026 guide ↗</a></div>
+    <div class="card soft"><span class="label">Uzbek trains</span><p class="small">Book through Uzbekistan Railways roughly 60 days ahead. Ordinary trains undercut Afrosiyob; night trains return you to Tashkent without a hotel.</p><a class="tiny bold" href="https://eticket.uzrailpass.uz/en/home">Official rail booking ↗</a></div>
+  </div>
+  <div class="note warning small" style="margin-top:4mm"><strong>Return-ticket warning.</strong> Prefer TAS–KUL–CGK on one booking. AirAsia X suspended its KUL–Tashkent route in 2026; current direct alternatives include Uzbekistan Airways and Batik Air Malaysia. Do not build the plan around a suspended service.</div>
+  <div class="footer"><span>Transport · Fares are planning ceilings</span><span class="page-no">06 / 11</span></div>
+</section>
+
+<!-- 07 SLEEP & EAT -->
+<section class="page balanced">
+  <div class="head"><div><div class="eyebrow">04 · Sleep & eat</div><h2 class="serif">Cheap, not fictional.</h2></div><div class="section-no">LOCAL-LEVEL PRICES</div></div>
+  <p class="subtitle">Target recently reviewed dorms with workable locations. A distant cheap bed can become expensive after two taxi rides.</p>
+  <table>
+    <thead><tr><th>City</th><th>Budget choice</th><th>Paid nights × target</th><th class="num">Food / day</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Hong Kong</strong></td><td>YHA Mei Ho House / The Mahjong<br><span class="muted tiny">Second night: airport</span></td><td>1 × Rp450K</td><td class="num">Rp250K</td></tr>
+      <tr><td><strong>Almaty</strong></td><td>Rooms Koktobe / Interhouse Almaty</td><td>4 × Rp150K</td><td class="num">Rp150K</td></tr>
+      <tr><td><strong>Bishkek</strong></td><td>Apple Hostel<br><span class="muted tiny">Published dorms from 950 KGS</span></td><td>3 × Rp200K</td><td class="num">Rp100K</td></tr>
+      <tr><td><strong>Tashkent</strong></td><td>BeShic / Topchan</td><td>1 × Rp250K</td><td class="num">Rp160K</td></tr>
+      <tr><td><strong>Samarkand</strong></td><td>Amir Hostel / Registan Hostel</td><td>2 × Rp200K</td><td class="num">Rp160K</td></tr>
+      <tr><td><strong>Bukhara</strong></td><td>Rumi Hotel & Hostel / old-city dorm</td><td>2 × Rp200K</td><td class="num">Rp160K</td></tr>
+    </tbody>
+  </table>
+  <div class="grid-2" style="margin-top:5mm">
+    <div class="card mint"><span class="label">Hong Kong & Almaty</span><h3>Cooked-food centres + stolovayas</h3><p class="small">Use supermarket breakfasts and Hong Kong cooked-food centres. In Almaty, point-and-eat <em>stolovaya</em> meals commonly run 1,000–2,500 KZT; samsa and bakery food keep breakfast cheap.</p></div>
+    <div class="card mint"><span class="label">Bishkek & Uzbekistan</span><h3>Canteens + one-dish meals</h3><p class="small">Choose plov, manty, lagman and samsa where locals eat. Published Uzbek main-dish prices are around 51,000–53,000 UZS. Skip cafés, alcohol and tourist-facing set menus.</p></div>
+  </div>
+  <div class="grid-3">
+    <div class="card soft"><span class="label">Bed check</span><p class="small">Read reviews from the last six months. Hostels in Central Asia can close while old blog recommendations remain online.</p></div>
+    <div class="card soft"><span class="label">Tax check</span><p class="small">Uzbek tourist tax is often collected separately at check-in. The budget includes approximately Rp350K across five nights.</p></div>
+    <div class="card soft"><span class="label">Sleep kit</span><p class="small">Earplugs, eye mask, padlock, travel towel and a warm layer for buses. Keep passport and valuables attached to your body.</p></div>
+  </div>
+  <div class="note small" style="margin-top:4mm"><strong>Two travellers?</strong> Compare a basic double room before booking two dorm beds—especially in Uzbekistan. Solo travellers usually save more with dorms; pairs sometimes do better with a guesthouse.</div>
+  <div class="footer"><span>Accommodation · Confirm final rates with taxes</span><span class="page-no">07 / 11</span></div>
+</section>
+
+<!-- 08 BUDGET -->
+<section class="page balanced">
+  <div class="head"><div><div class="eyebrow">05 · The money</div><h2 class="serif">Rp23.16M planned.<br>Rp25.00M hard stop.</h2></div><div class="section-no">PER PERSON</div></div>
+  <table>
+    <thead><tr><th>Category</th><th>What it covers</th><th class="num">Cost</th></tr></thead>
+    <tbody>
+      <tr><td><strong>International flights</strong></td><td>CGK–HKG · HKG–ALA · TAS–CGK</td><td class="num"><strong>Rp12.50M</strong></td></tr>
+      <tr><td>Ground & local transport</td><td>Two international buses · three trains · city transport</td><td class="num">Rp2.41M</td></tr>
+      <tr><td>Beds & tourist tax</td><td>13 paid dorm nights + Uzbek tax</td><td class="num">Rp3.05M</td></tr>
+      <tr><td>Food</td><td>18 days · canteens, bakeries, local mains</td><td class="num">Rp2.70M</td></tr>
+      <tr><td>Kyrgyzstan e-Visa</td><td>Single-entry tourist visa allowance</td><td class="num">Rp1.30M</td></tr>
+      <tr><td>Sights, data & laundry</td><td>Selected monuments · four data plans · basic laundry</td><td class="num">Rp1.20M</td></tr>
+      <tr class="total-row"><td>Planned expenditure</td><td>Before insurance and disruptions</td><td class="num">Rp23.16M</td></tr>
+      <tr><td><strong>Protected reserve</strong></td><td>Insurance · fare movement · missed connection · emergency</td><td class="num"><strong>Rp1.84M</strong></td></tr>
+      <tr class="total-row"><td>Absolute trip ceiling</td><td>Do not exceed</td><td class="num">Rp25.00M</td></tr>
+    </tbody>
+  </table>
+  <div class="grid-4" style="margin-top:5mm">
+    <div class="card soft fare"><span class="label">Charyn tour</span><div class="price">450–730K</div><span class="tiny muted">Optional</span></div>
+    <div class="card soft fare"><span class="label">Shymbulak</span><div class="price">≈475K</div><span class="tiny muted">Optional</span></div>
+    <div class="card soft fare"><span class="label">Extra HK bed</span><div class="price">≈450K</div><span class="tiny muted">Optional</span></div>
+    <div class="card soft fare"><span class="label">Checked bag</span><div class="price">0.8–1.5M</div><span class="tiny muted">Avoid</span></div>
+  </div>
+  <div class="grid-2" style="margin-top:3mm">
+    <div class="card lime"><span class="label">The fare tripwires</span><p class="small"><strong>CGK–HKG ≤ Rp2.50M</strong><br><strong>HKG–ALA ≤ Rp4.25M</strong><br><strong>TAS–CGK ≤ Rp5.75M</strong></p><p class="small">Combined ceiling: <strong>Rp12.50M</strong>.</p></div>
+    <div class="card coral"><span class="label">If fares break the ceiling</span><p class="small"><strong>Drop Kyrgyzstan first:</strong> save roughly Rp2M including the visa and three paid nights.</p><p class="small"><strong>Or drop Hong Kong:</strong> use Kuala Lumpur as the hub and save another Rp1.2–1.8M.</p></div>
+  </div>
+  <div class="note warning small" style="margin-top:4mm"><strong>Do not turn the reserve into an upgrade fund.</strong> It is what pays for a disrupted border day, a replacement train or an unavoidable hostel night.</div>
+  <div class="footer"><span>Budget · All amounts in Indonesian rupiah</span><span class="page-no">08 / 11</span></div>
+</section>
+
+<!-- 09 VISAS -->
+<section class="page balanced">
+  <div class="head"><div><div class="eyebrow">06 · Entry & admin</div><h2 class="serif">The paperwork is part of the route.</h2></div><div class="section-no">INDONESIAN PASSPORT</div></div>
+  <div class="card mint">
+    <span class="badge">Visa-free · 30 days</span>
+    <h3 style="margin-top:2mm">Hong Kong</h3>
+    <p class="small">No advance visa for an Indonesian ordinary passport. Carry the onward HKG–ALA ticket and accommodation details.</p>
+    <a class="tiny bold" href="https://www.immd.gov.hk/opendata/eng/law-and-security/visas/visit_visa_entry_permit_requirements_HKSAR.csv">Official Immigration dataset ↗</a>
+  </div>
+  <div class="card mint">
+    <span class="badge">Visa-free · 30 days</span><span class="badge lime">QazETA required</span>
+    <h3 style="margin-top:2mm">Kazakhstan</h3>
+    <p class="small">Apply for <strong>free QazETA at least 72 hours before entry</strong>. Valid for 180 days. Although mandatory enforcement begins in July 2027, the rollout reaches Almaty Airport in January and all borders in March—obtain it before this trip.</p>
+    <a class="tiny bold" href="https://www.gov.kz/org/mfa-amman/press/article/details/254014?lang=en">Official QazETA procedure ↗</a>
+  </div>
+  <div class="card coral">
+    <span class="badge coral">e-Visa required</span>
+    <h3 style="margin-top:2mm">Kyrgyzstan</h3>
+    <p class="small">Budget approximately <strong>USD70 / Rp1.28M</strong> for single-entry tourism. Apply only through the official government portal. Review can take five working days after all corrections; mistakes and refusals are non-refundable.</p>
+    <a class="tiny bold" href="https://www.evisa.e-gov.kg/">Official Kyrgyz e-Visa portal ↗</a>
+  </div>
+  <div class="card mint">
+    <span class="badge">Visa-free · 30 days</span>
+    <h3 style="margin-top:2mm">Uzbekistan</h3>
+    <p class="small">Your accommodation must register your stay. Keep registration records and expect tourist tax to appear separately on the bill. Both registration and tax are different obligations.</p>
+    <a class="tiny bold" href="https://gov.uz/en/mfa/pages/o-zbekiston-respublikasi-vizasi">Official MFA visa list ↗</a>
+  </div>
+  <div class="grid-2">
+    <div class="card soft"><span class="label">Brunei · optional</span><h3>Visa-free · 14 days</h3><p class="small">Only relevant if added on a Royal Brunei through-ticket. Check the final entry rules before departure.</p></div>
+    <div class="card coral"><span class="label">China · alternative only</span><h3>Regular tourist visa required</h3><p class="small">The 240-hour transit scheme excludes Xinjiang. Do not attempt Yining on transit-free entry.</p></div>
+  </div>
+  <div class="note warning small" style="margin-top:3mm"><strong>Official advice worth following:</strong> Kyrgyzstan’s portal advises against buying flights before visa approval. Secure the e-Visa before committing to non-refundable long-haul tickets.</div>
+  <div class="footer"><span>Rules researched November 2026 · Recheck before departure</span><span class="page-no">09 / 11</span></div>
+</section>
+
+<!-- 10 ALTERNATIVES -->
+<section class="page balanced">
+  <div class="head"><div><div class="eyebrow">07 · Alternatives</div><h2 class="serif">What was cut—and why.</h2></div><div class="section-no">ROUTE TRADE-OFFS</div></div>
+  <div class="card coral">
+    <span class="badge coral">20 days · Rp25.5–27.5M</span>
+    <h3 style="margin-top:2mm">Full China overland: Guangzhou + Yining</h3>
+    <p class="small"><strong>Route:</strong> Hong Kong → Guangzhou HSR → flight to Yining → international bus to Almaty.</p>
+    <table>
+      <thead><tr><th>Leg</th><th>Planning cost</th><th>Constraint</th></tr></thead>
+      <tbody>
+        <tr><td>Hong Kong → Guangzhou</td><td>≈ Rp550K · CNY215</td><td>West Kowloon → Guangzhou South</td></tr>
+        <tr><td>Guangzhou → Yining</td><td>Flight · variable</td><td>Often one stop; exact-date fare decides viability</td></tr>
+        <tr><td>Yining → Almaty</td><td>Rp550–820K</td><td>9–10 h · morning departures · border included</td></tr>
+      </tbody>
+    </table>
+    <p class="small" style="margin-top:3mm"><strong>Why it misses:</strong> a regular Chinese visa, two extra days and local costs erase the reserve. If chosen, enter Guangzhou before the 15 April Canton Fair surge and avoid the Yining bus around Qingming, 3–5 April.</p>
+    <a class="tiny bold" href="https://www.trainspread.com/tickets/yining-almaty-bus-tickets">Yining–Almaty bus details ↗</a>
+  </div>
+  <div class="card">
+    <span class="badge sand">Optional · +Rp0.8–1.2M</span>
+    <h3 style="margin-top:2mm">Brunei stopover</h3>
+    <p class="small">Royal Brunei accepts eligible 8–24-hour stopovers on selected city pairs. Request at least five working days ahead; RB Super Saver is excluded. <strong>The published terms do not promise free accommodation</strong> and put stopover-related costs on the passenger.</p>
+    <p class="small"><strong>Cheap visit:</strong> Omar Ali Saifuddien Mosque exterior, Kampong Ayer and Tamu Kianggeh. Indonesian passports receive 14-day visa-free entry.</p>
+    <a class="tiny bold" href="https://www.flyroyalbrunei.com/brunei/en/book-manage/stopover-in-brunei/">Official stopover terms ↗</a>
+  </div>
+  <div class="grid-2">
+    <div class="card soft"><span class="label">Beijing</span><h3>Wrong direction, wrong trip length</h3><p class="small">Another major long-distance leg plus at least two useful sightseeing days. It does not improve the Central Asia overland logic.</p></div>
+    <div class="card soft"><span class="label">Dushanbe</span><h3>A detour with backtracking</h3><p class="small">Adds border crossings and at least two days around the Samarkand corridor. Save Tajikistan for a longer Pamir-focused trip.</p></div>
+  </div>
+  <div class="note small" style="margin-top:4mm"><strong>Best fallback:</strong> remove Hong Kong and Kyrgyzstan, keep Kazakhstan and Uzbekistan, and use Kuala Lumpur for both international connections. Expected total: approximately Rp19–21.5M.</div>
+  <div class="footer"><span>Alternatives · Choose by total cost, not country count</span><span class="page-no">10 / 11</span></div>
+</section>
+
+<!-- 11 ACTION PLAN -->
+<section class="page">
+  <div class="head"><div><div class="eyebrow">08 · Booking battle plan</div><h2 class="serif">In the right order.</h2></div><div class="section-no">NEXT ACTIONS</div></div>
+  <div class="grid-2">
+    <div>
+      <ol class="steps small">
+        <li><strong>Confirm the passport and fare ceilings.</strong><br><span class="muted">This plan assumes an Indonesian ordinary passport and Rp12.5M total airfare.</span></li>
+        <li><strong>Start the Kyrgyz e-Visa.</strong><br><span class="muted">Use only the official portal; check every passport character before paying.</span></li>
+        <li><strong>Book the three international legs.</strong><br><span class="muted">Open-jaw route. Prefer a protected TAS–KUL–CGK itinerary.</span></li>
+        <li><strong>Reserve refundable dorms.</strong><br><span class="muted">Check recent reviews, location and tourist tax before paying.</span></li>
+        <li><strong>Set the Uzbek train reminders.</strong><br><span class="muted">Start checking around late January; buy ordinary trains and the Bukhara sleeper when inventory opens.</span></li>
+        <li><strong>Submit QazETA.</strong><br><span class="muted">Free, online, at least 72 hours before entering Kazakhstan. Do it earlier.</span></li>
+      </ol>
+    </div>
+    <div>
+      <div class="card dark"><span class="label" style="color:#a9c0b5">Non-negotiable</span><h3>Leave with Rp1.5M+ untouched.</h3><p class="small" style="color:#d3e1d7">If final bookings cannot preserve a meaningful reserve, switch to the fallback route instead of hoping nothing goes wrong.</p></div>
+      <div class="card soft"><span class="label">Carry-on strategy</span><p class="small">7–10 kg · laundry once or twice · no “just in case” items. Checked luggage can consume most of the reserve.</p></div>
+      <div class="card soft"><span class="label">March / April pack</span><p class="small">Thermal layer, compact insulated jacket, waterproof shell, walking shoes and warm socks. Mountains remain wintry while Uzbek cities turn mild.</p></div>
+      <div class="card soft"><span class="label">Money & apps</span><p class="small">2GIS · Yandex Go · offline translation · some USD cash · international debit/credit card. Decline dynamic currency conversion; pay in local currency.</p></div>
+    </div>
+  </div>
+  <div class="closing">
+    <span class="label" style="color:#a9c0b5">The verdict</span>
+    <h3 class="serif">This budget works—with discipline.</h3>
+    <p class="small">The 18-day route is feasible when all three flights stay below Rp12.5M, the bag stays in the cabin, and optional tours stay optional. You still get Hong Kong, Nauryz, the Tien Shan and the Silk Road’s two great cities.</p>
+    <div class="tags"><span class="badge lime">18 days</span><span class="badge lime">Rp23.16M planned</span><span class="badge lime">Rp25M ceiling</span></div>
+  </div>
+  <div style="margin-top:5mm">
+    <span class="label">Core references · clickable in the PDF</span>
+    <ol class="source-list">
+      <li><a href="https://en.nia.gov.cn/n147418/n147463/c183412/content.html">China NIA · visa-free transit ports and areas</a></li>
+      <li><a href="https://www.immd.gov.hk/opendata/eng/law-and-security/visas/visit_visa_entry_permit_requirements_HKSAR.csv">Hong Kong Immigration · visitor entry table</a></li>
+      <li><a href="https://www.gov.kz/org/mfa/press/article/details/6764?lang=en">Kazakhstan MFA · visa regime</a></li>
+      <li><a href="https://www.gov.kz/org/mfa-amman/press/article/details/254014?lang=en">Kazakhstan MFA · QazETA procedure</a></li>
+      <li><a href="https://www.evisa.e-gov.kg/">Kyrgyzstan · official e-Visa portal</a></li>
+      <li><a href="https://gov.uz/en/mfa/pages/o-zbekiston-respublikasi-vizasi">Uzbekistan MFA · visa-free list</a></li>
+      <li><a href="https://news.cathaypacific.com/cathay-pacific-launches-direct-flights-to-almaty-from-9-january-2027">Cathay Pacific · HKG–ALA schedule</a></li>
+      <li><a href="https://backpackmoments.com/how-to-get-from-almaty-to-bishkek-by-bus/">Backpack Moments · Almaty–Bishkek bus</a></li>
+      <li><a href="https://www.journalofnomads.com/how-to-get-from-bishkek-to-tashkent-by-bus/">Journal of Nomads · Bishkek–Tashkent bus</a></li>
+      <li><a href="https://oxusroad.com/en/travel-guide/trip-cost/">Oxusroad · Uzbekistan 2026 prices</a></li>
+      <li><a href="https://www.trainspread.com/tickets/yining-almaty-bus-tickets">TrainSpread · Yining–Almaty bus</a></li>
+      <li><a href="https://www.flyroyalbrunei.com/brunei/en/book-manage/stopover-in-brunei/">Royal Brunei · stopover conditions</a></li>
+    </ol>
+  </div>
+  <div class="footer"><span>Travel document · End of field plan</span><span class="page-no">11 / 11</span></div>
+</section>
+
+</body>
+</html>
