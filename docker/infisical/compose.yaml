@@ -1,0 +1,29 @@
+services:
+      backend:
+        image: infisical/infisical:latest
+        container_name: infisical
+        restart: unless-stopped
+        depends_on:
+          db: { condition: service_healthy }
+          redis: { condition: service_started }
+        env_file: .env
+        environment:
+          NODE_ENV: production
+        ports:
+          - "172.17.0.1:8090:8080"             
+      db:
+        image: postgres:16-alpine
+        container_name: infisical-db
+        restart: unless-stopped
+        env_file: .env
+        volumes:
+          - ./data/postgres:/var/lib/postgresql/data
+        healthcheck:
+          test: ["CMD-SHELL", "pg_isready -U infisical"]
+          interval: 5s
+          timeout: 10s
+          retries: 10
+      redis:
+        image: redis:7-alpine
+        container_name: infisical-redis
+        restart: unless-stopped

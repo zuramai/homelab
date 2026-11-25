@@ -1,0 +1,7 @@
+# Host-only secrets: PATs, generated passwords, tunnel tokens. Never commit.
+secrets/
+
+# Runtime state and credentials of the docker apps.
+docker/*/data/
+docker/*/.env
+docker/affine/config/private.key

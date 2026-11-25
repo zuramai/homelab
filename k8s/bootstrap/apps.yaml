@@ -8,17 +8,17 @@ spec:
   goTemplateOptions: ["missingkey=error"]
   generators:
     - git:
-        repoURL: https://github.com/zuramai/homelab-k8s.git
+        repoURL: https://github.com/zuramai/homelab.git
         revision: HEAD
         directories:
-          - path: apps/*
+          - path: k8s/apps/*
   template:
     metadata:
       name: '{{.path.basename}}'
     spec:
       project: default
       source:
-        repoURL: https://github.com/zuramai/homelab-k8s.git
+        repoURL: https://github.com/zuramai/homelab.git
         targetRevision: HEAD
         path: '{{.path.path}}'
       destination:
