@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: headlamp
+  labels: { app: headlamp }
+spec:
+  replicas: 1
+  selector:
+    matchLabels: { app: headlamp }
+  template:
+    metadata:
+      labels: { app: headlamp }
+    spec:
+      serviceAccountName: headlamp
+      containers:
+        - name: headlamp
+          image: ghcr.io/headlamp-k8s/headlamp:v0.46.0
+          args: ["-in-cluster", "-plugins-dir=/headlamp/plugins"]
+          ports: [{ containerPort: 4466, name: http }]
+          readinessProbe:
+            httpGet: { path: /, port: 4466 }
+          livenessProbe:
+            httpGet: { path: /, port: 4466 }
+            initialDelaySeconds: 20
+          resources:
+            requests: { cpu: 50m, memory: 128Mi }
+            limits: { memory: 512Mi }
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: headlamp
+spec:
+  selector: { app: headlamp }
+  ports: [{ port: 80, targetPort: 4466 }]
+---
+# Tailnet-only exposure; there is no public Cloudflare hostname for Headlamp.
+apiVersion: v1
+kind: Service
+metadata:
+  name: headlamp-ts
+  annotations:
+    tailscale.com/hostname: headlamp
+spec:
+  type: LoadBalancer
+  loadBalancerClass: tailscale
+  selector: { app: headlamp }
+  ports: [{ port: 80, targetPort: 4466 }]

@@ -14,6 +14,7 @@ docker/            Docker Compose apps (one directory per app)
 k8s/
   apps/            GitOps manifests, one Application per directory
     databases/     postgres + mongo (StatefulSets, tailnet exposure)
+    headlamp/      Headlamp UI (tailnet only)
     nulis/         nulis.saugi.me
     siti/          telegram bot
     cloudflared/   in-cluster tunnel connector
@@ -56,6 +57,18 @@ scripts/k8s.sh refresh      # force a hard refresh from git
 
 Bootstrap needs `secrets/argocd-repo-secret.yaml` — copy
 `k8s/bootstrap/repo-secret.example.yaml` and fill in a read-only PAT.
+
+### Headlamp
+
+Headlamp is exposed on the tailnet only, at
+`http://headlamp.starling-tilapia.ts.net` (no public Cloudflare hostname).
+Its ServiceAccount is bound to `cluster-admin`; log in with a bearer token.
+A usable token is stored host-side in `secrets/headlamp-token` (gitignored).
+Regenerate it with:
+
+```bash
+kubectl -n headlamp create token headlamp --duration=8760h
+```
 
 ## Secrets policy
 
