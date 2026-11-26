@@ -23,7 +23,7 @@ spec:
       containers:
         - name: postgres
           # pgvector build of the same PostgreSQL 17 (vector 0.8 extension).
-          image: pgvector/pgvector:pg17
+          image: pgvector/pgvector:pg17-trixie
           env:
             # Superuser is "postgres"; apps get their own roles (11.6).
             - { name: PGDATA, value: /var/lib/postgresql/data/pgdata }
