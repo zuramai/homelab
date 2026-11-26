@@ -10,6 +10,12 @@ spec:
     metadata:
       labels: { app: cloudflared }
     spec:
+      # The tunnel ingress points notes.saugi.me at http://affine:3010.
+      # In-cluster pods cannot resolve Docker Compose names, so map the name to
+      # the host's tunnel bridge gateway, where the affine port is published.
+      hostAliases:
+        - ip: 172.19.0.1
+          hostnames: ["affine"]
       containers:
         - name: cloudflared
           # Pin a tag from github.com/cloudflare/cloudflared/releases so Renovate can track it.
