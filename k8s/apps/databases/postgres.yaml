@@ -22,7 +22,8 @@ spec:
     spec:
       containers:
         - name: postgres
-          image: postgres:17
+          # pgvector build of the same PostgreSQL 17 (vector 0.8 extension).
+          image: pgvector/pgvector:pg17
           env:
             # Superuser is "postgres"; apps get their own roles (11.6).
             - { name: PGDATA, value: /var/lib/postgresql/data/pgdata }
