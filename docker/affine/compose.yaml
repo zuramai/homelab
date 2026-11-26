@@ -4,11 +4,7 @@ services:
     image: ghcr.io/toeverything/affine:stable
     container_name: affine_server
     ports:
-      # 172.19.0.1 is the gateway of the external `tunnel` network; the
-      # in-cluster cloudflared pods reach affine through it (hostAliases in
-      # k8s/apps/cloudflared). The Docker connector uses `affine:3010`.
       - '127.0.0.1:3010:3010'
-      - '172.19.0.1:3010:3010'
     networks: [default, tunnel]
     depends_on:
       redis:

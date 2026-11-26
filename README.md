@@ -17,7 +17,6 @@ k8s/
     headlamp/      Headlamp UI (tailnet only)
     nulis/         nulis.saugi.me
     siti/          telegram bot
-    cloudflared/   in-cluster tunnel connector
   bootstrap/       Argo CD ApplicationSet + repo-secret template
 scripts/           docker.sh, k8s.sh, k8s-secrets.sh
 secrets/           host-only credentials (gitignored, never committed)
@@ -40,7 +39,9 @@ scripts/docker.sh down                 # stop everything (data kept)
 
 First run on a new host: copy `docker/*/.env.example` to `.env` and fill in
 real values. `cloudflared` and `navidrome` share the external `tunnel`
-network; `docker.sh up` creates it if missing.
+network; `docker.sh up` creates it if missing. The Docker `cloudflared` is the
+only tunnel connector: it reaches compose apps by service name and k8s
+hostnames through Traefik on the host IP.
 
 ## Kubernetes (GitOps)
 

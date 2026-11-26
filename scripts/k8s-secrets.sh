@@ -4,7 +4,7 @@
 # Run once after Argo CD bootstrap. Values needed later are saved to secrets/k8s-bootstrap.env.
 set -euo pipefail
 
-for ns in databases nulis siti cloudflared; do
+for ns in databases nulis siti; do
   if kubectl get namespace "$ns" >/dev/null 2>&1; then
     echo "namespace $ns already exists — 11.4 already ran; refusing to regenerate passwords" >&2
     exit 1
@@ -14,14 +14,6 @@ done
 read -r  -p 'Infisical client ID (homelab-k8s): ' INFISICAL_CLIENT_ID
 read -r -s -p 'Infisical client secret: ' INFISICAL_CLIENT_SECRET
 echo
-
-CF_TOKEN="$(docker inspect cloudflared --format '{{range .Config.Env}}{{println .}}{{end}}' \
-  | sed -n 's/^TUNNEL_TOKEN=//p')"
-if [ -z "${CF_TOKEN:-}" ]; then
-  read -r -s -p 'Cloudflare tunnel token: ' CF_TOKEN
-  echo
-fi
-[ -n "$CF_TOKEN" ] || { echo 'missing tunnel token' >&2; exit 1; }
 
 umask 077
 OUT="$HOME/homelab/secrets/k8s-bootstrap.env"
@@ -51,7 +43,7 @@ DATABASE_URL="postgres://siti:${SITI_DB_PW}@postgres.databases.svc.cluster.local
 } > "$OUT"
 chmod 600 "$OUT"
 
-for ns in databases nulis siti cloudflared; do kubectl create namespace "$ns"; done
+for ns in databases nulis siti; do kubectl create namespace "$ns"; done
 
 kubectl -n databases create secret generic postgres-admin --from-literal=password="$PG_ADMIN_PW"
 kubectl -n databases create secret generic mongo-admin    --from-literal=password="$MONGO_ROOT_PW"
@@ -61,8 +53,6 @@ for ns in nulis siti; do
     --from-literal=clientId="$INFISICAL_CLIENT_ID" \
     --from-literal=clientSecret="$INFISICAL_CLIENT_SECRET"
 done
-
-kubectl -n cloudflared create secret generic cloudflared-token --from-literal=token="$CF_TOKEN"
 
 echo
 echo "saved values: $OUT (0600)"
