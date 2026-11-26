@@ -4,7 +4,7 @@
 # Run once after Argo CD bootstrap. Values needed later are saved to secrets/k8s-bootstrap.env.
 set -euo pipefail
 
-for ns in databases nulis siti; do
+for ns in databases nulis siti immich; do
   if kubectl get namespace "$ns" >/dev/null 2>&1; then
     echo "namespace $ns already exists — 11.4 already ran; refusing to regenerate passwords" >&2
     exit 1
@@ -23,6 +23,7 @@ PG_ADMIN_PW="$(openssl rand -hex 24)"
 MONGO_ROOT_PW="$(openssl rand -hex 24)"
 NULIS_DB_PW="$(openssl rand -hex 16)"
 SITI_DB_PW="$(openssl rand -hex 16)"
+IMMICH_DB_PW="$(openssl rand -hex 24)"
 NUXT_SESSION_PASSWORD="$(openssl rand -hex 24)"
 NUXT_ENCRYPTION_KEY="$(openssl rand -hex 24)"
 NUXT_MONGODB_URI="mongodb://nulis:${NULIS_DB_PW}@mongo.databases.svc.cluster.local:27017/nulis"
@@ -34,6 +35,7 @@ DATABASE_URL="postgres://siti:${SITI_DB_PW}@postgres.databases.svc.cluster.local
   printf 'MONGO_ROOT_PW=%q\n'            "$MONGO_ROOT_PW"
   printf 'NULIS_DB_PW=%q\n'              "$NULIS_DB_PW"
   printf 'SITI_DB_PW=%q\n'               "$SITI_DB_PW"
+  printf 'IMMICH_DB_PW=%q\n'             "$IMMICH_DB_PW"
   printf 'NUXT_MONGODB_URI=%q\n'         "$NUXT_MONGODB_URI"
   printf 'NUXT_SESSION_PASSWORD=%q\n'    "$NUXT_SESSION_PASSWORD"
   printf 'NUXT_ENCRYPTION_KEY=%q\n'      "$NUXT_ENCRYPTION_KEY"
@@ -43,10 +45,11 @@ DATABASE_URL="postgres://siti:${SITI_DB_PW}@postgres.databases.svc.cluster.local
 } > "$OUT"
 chmod 600 "$OUT"
 
-for ns in databases nulis siti; do kubectl create namespace "$ns"; done
+for ns in databases nulis siti immich; do kubectl create namespace "$ns"; done
 
 kubectl -n databases create secret generic postgres-admin --from-literal=password="$PG_ADMIN_PW"
 kubectl -n databases create secret generic mongo-admin    --from-literal=password="$MONGO_ROOT_PW"
+kubectl -n immich    create secret generic immich-db      --from-literal=password="$IMMICH_DB_PW"
 
 for ns in nulis siti; do
   kubectl -n "$ns" create secret generic infisical-auth \

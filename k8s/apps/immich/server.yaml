@@ -1,0 +1,89 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: immich
+spec:
+  selector: { app: immich }
+  ports: [{ port: 2283, targetPort: http }]
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: immich
+spec:
+  replicas: 1
+  selector:
+    matchLabels: { app: immich }
+  template:
+    metadata:
+      labels: { app: immich }
+    spec:
+      initContainers:
+        # /data must really be the T7. Without this, an unplugged disk turns
+        # into an empty directory on the NVMe and Immich happily starts a new
+        # empty library there.
+        - name: require-ssd
+          image: busybox:1.37
+          command:
+            - sh
+            - -c
+            - |
+              set -eu
+              fs="$(stat -f -c %T /data)"
+              if [ "$fs" != "exfat" ]; then
+                echo "refusing to start: /data is '$fs', expected the exFAT T7 (mount /srv/t7)" >&2
+                exit 1
+              fi
+        - name: wait-for-backends
+          image: busybox:1.37
+          command:
+            - sh
+            - -c
+            - |
+              set -eu
+              for i in $(seq 1 120); do
+                nc -z immich-postgres 5432 && nc -z immich-redis 6379 && exit 0
+                sleep 2
+              done
+              echo "postgres/redis unreachable after 240s" >&2
+              exit 1
+      containers:
+        - name: immich
+          image: ghcr.io/immich-app/immich-server:v3.4.2
+          env:
+            - { name: TZ, value: Asia/Jakarta }
+            - { name: DB_HOSTNAME, value: immich-postgres }
+            - { name: DB_PORT, value: "5432" }
+            - { name: DB_USERNAME, value: postgres }
+            - { name: DB_DATABASE_NAME, value: immich }
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef: { name: immich-db, key: password }
+            - { name: REDIS_HOSTNAME, value: immich-redis }
+            - { name: REDIS_PORT, value: "6379" }
+            # v3 reads this on first boot to seed machineLearning.urls in the
+            # system config; later changes are made in the admin UI.
+            - { name: IMMICH_MACHINE_LEARNING_URL, value: http://immich-ml:3003 }
+            # Tailscale ingress proxy pods; lets Immich see the real client IP.
+            - { name: IMMICH_TRUSTED_PROXIES, value: 10.42.0.0/16 }
+          ports: [{ name: http, containerPort: 2283 }]
+          volumeMounts:
+            - { name: media, mountPath: /data }
+          startupProbe:
+            httpGet: { path: /api/server/ping, port: http }
+            periodSeconds: 5
+            failureThreshold: 60
+          readinessProbe:
+            httpGet: { path: /api/server/ping, port: http }
+            periodSeconds: 10
+          livenessProbe:
+            httpGet: { path: /api/server/ping, port: http }
+            periodSeconds: 30
+            failureThreshold: 5
+          resources:
+            requests: { cpu: 200m, memory: 1Gi }
+            limits: { memory: 4Gi }
+      volumes:
+        - name: media
+          persistentVolumeClaim:
+            claimName: immich-media

@@ -1,0 +1,67 @@
+# The database stays on the node's NVMe (local-path), not on the T7: Immich's
+# Postgres image initialises PGDATA with 0700 and --data-checksums, and exFAT
+# silently drops chmod/chown. A few GB, so the SSD holds the photo library.
+apiVersion: v1
+kind: Service
+metadata:
+  name: immich-postgres
+spec:
+  clusterIP: None
+  selector: { app: immich-postgres }
+  ports: [{ port: 5432, targetPort: postgres }]
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: immich-postgres
+spec:
+  serviceName: immich-postgres
+  replicas: 1
+  selector:
+    matchLabels: { app: immich-postgres }
+  template:
+    metadata:
+      labels: { app: immich-postgres }
+    spec:
+      containers:
+        - name: postgres
+          # Immich's own build: PostgreSQL 14 + VectorChord + pgvecto.rs, the
+          # pair the server probes for (DB_VECTOR_EXTENSION is auto-detected).
+          image: ghcr.io/immich-app/postgres:14-vectorchord0.4.3-pgvectors0.2.0
+          env:
+            - { name: POSTGRES_USER, value: postgres }
+            - { name: POSTGRES_DB, value: immich }
+            - { name: POSTGRES_INITDB_ARGS, value: --data-checksums }
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef: { name: immich-db, key: password }
+          ports: [{ name: postgres, containerPort: 5432 }]
+          volumeMounts:
+            - { name: data, mountPath: /var/lib/postgresql/data }
+            # postgres:16-alpine style default /dev/shm (64Mi) is too small for
+            # parallel queries; upstream compose asks for 128mb.
+            - { name: shm, mountPath: /dev/shm }
+          startupProbe:
+            exec: { command: ["pg_isready", "-U", "postgres", "-d", "immich"] }
+            periodSeconds: 5
+            failureThreshold: 60
+          readinessProbe:
+            exec: { command: ["pg_isready", "-U", "postgres", "-d", "immich"] }
+            periodSeconds: 10
+          livenessProbe:
+            exec: { command: ["pg_isready", "-U", "postgres", "-d", "immich"] }
+            periodSeconds: 30
+            failureThreshold: 5
+          resources:
+            requests: { cpu: 100m, memory: 512Mi }
+            limits: { memory: 2Gi }
+      volumes:
+        - name: shm
+          emptyDir: { medium: Memory, sizeLimit: 128Mi }
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes: [ReadWriteOnce]
+        resources:
+          requests: { storage: 20Gi }

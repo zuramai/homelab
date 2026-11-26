@@ -15,6 +15,7 @@ k8s/
   apps/            GitOps manifests, one Application per directory
     databases/     postgres + mongo (StatefulSets, tailnet exposure)
     headlamp/      Headlamp UI (tailnet only)
+    immich/        photo + video library (T7 SSD, tailnet only)
     nulis/         nulis.saugi.me
     siti/          telegram bot
   bootstrap/       Argo CD ApplicationSet + repo-secret template
@@ -70,6 +71,24 @@ Regenerate it with:
 ```bash
 kubectl -n headlamp create token headlamp --duration=8760h
 ```
+
+### Immich
+
+Photos and videos at `https://immich.starling-tilapia.ts.net` — tailnet only,
+certificate issued by the Tailscale operator (`ingressClassName: tailscale`).
+No public Cloudflare hostname.
+
+The library lives on the external Samsung PSSD T7, mounted from `/etc/fstab` at
+`/srv/t7` (exFAT, `nofail`) with media in `/srv/t7/immich/media` and the ML model
+cache in `/srv/t7/immich/ml-cache`. PostgreSQL is the one piece that stays on the
+NVMe: Immich's image initialises `PGDATA` with `--data-checksums` and 0700
+permissions, which exFAT cannot honour. Both SSD paths are `hostPath` PVs of
+type `Directory`, so an unplugged disk fails the pod instead of starting an
+empty library on the boot disk, and the server's `require-ssd` initContainer
+re-checks the filesystem type before Immich runs.
+
+The DB password is generated into `secrets/k8s-bootstrap.env` (`IMMICH_DB_PW`)
+and seeded as the `immich-db` Secret; nothing is committed.
 
 ## Secrets policy
 

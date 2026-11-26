@@ -1,0 +1,59 @@
+# Media lives on the external Samsung PSSD T7 (exFAT, mounted at /srv/t7 on
+# the node). hostPath (not local-path) so photo data stays readable outside the
+# cluster and outlives a reinstall.
+#
+# type: Directory, not DirectoryOrCreate: if the SSD is unplugged the mount
+# point is empty, and kubelet must fail the pod instead of quietly writing a
+# new library to the NVMe behind /srv/t7. server.yaml repeats that check from
+# inside the container.
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: immich-media
+spec:
+  capacity: { storage: 700Gi }
+  accessModes: [ReadWriteOnce]
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: immich-ssd
+  hostPath:
+    path: /srv/t7/immich/media
+    type: Directory
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: immich-media
+  namespace: immich
+spec:
+  accessModes: [ReadWriteOnce]
+  storageClassName: immich-ssd
+  volumeName: immich-media
+  resources:
+    requests: { storage: 700Gi }
+---
+# Machine-learning model cache: re-downloadable, but ~2 GiB per cold start, so
+# it sits on the SSD next to the library instead of the boot disk.
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: immich-ml-cache
+spec:
+  capacity: { storage: 10Gi }
+  accessModes: [ReadWriteOnce]
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: immich-ssd
+  hostPath:
+    path: /srv/t7/immich/ml-cache
+    type: Directory
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: immich-ml-cache
+  namespace: immich
+spec:
+  accessModes: [ReadWriteOnce]
+  storageClassName: immich-ssd
+  volumeName: immich-ml-cache
+  resources:
+    requests: { storage: 10Gi }

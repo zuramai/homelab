@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: immich
+  annotations:
+    # Never prune the namespace: the immich-db Secret is created host-side.
+    argocd.argoproj.io/sync-options: Prune=false
