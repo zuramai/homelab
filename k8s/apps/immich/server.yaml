@@ -18,6 +18,9 @@ spec:
     metadata:
       labels: { app: immich }
     spec:
+      # kubelet would otherwise inject IMMICH_PORT=tcp://… from the `immich`
+      # Service, which collides with Immich's own IMMICH_PORT parsing.
+      enableServiceLinks: false
       initContainers:
         # /data must really be the T7. Without this, an unplugged disk turns
         # into an empty directory on the NVMe and Immich happily starts a new

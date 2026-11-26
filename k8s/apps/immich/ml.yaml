@@ -18,6 +18,9 @@ spec:
     metadata:
       labels: { app: immich-ml }
     spec:
+      # Same collision as the server: the `immich` Service would inject
+      # IMMICH_PORT=tcp://… and the ML settings parser expects an integer.
+      enableServiceLinks: false
       containers:
         - name: machine-learning
           image: ghcr.io/immich-app/immich-machine-learning:v3.4.2
