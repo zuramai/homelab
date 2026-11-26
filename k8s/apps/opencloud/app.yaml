@@ -1,0 +1,76 @@
+# All-in-one container: proxy, web UI, IDM (built-in IdP), decomposedfs storage.
+# `opencloud init` writes the config with random service secrets on first boot
+# and is a no-op afterwards (it exits non-zero once /etc/opencloud/config exists,
+# hence the `|| true` — same pattern as the upstream compose file).
+apiVersion: v1
+kind: Service
+metadata:
+  name: opencloud
+spec:
+  selector: { app: opencloud }
+  ports: [{ port: 9200, targetPort: http }]
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: opencloud
+spec:
+  replicas: 1
+  selector:
+    matchLabels: { app: opencloud }
+  template:
+    metadata:
+      labels: { app: opencloud }
+    spec:
+      # The `opencloud` Service would inject OPENCLOUD_PORT=tcp://… into the pod.
+      enableServiceLinks: false
+      securityContext:
+        # Upstream container runs as 1000:1000; keep that so the files on the
+        # T7 stay owned by the same uid the host uses.
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+      containers:
+        - name: opencloud
+          image: opencloudeu/opencloud-rolling:9.2.0
+          command: ["/bin/sh", "-c", "opencloud init || true; exec opencloud server"]
+          env:
+            - { name: TZ, value: Asia/Jakarta }
+            - { name: OC_URL, value: https://cloud.starling-tilapia.ts.net }
+            - { name: OC_LOG_LEVEL, value: info }
+            # TLS is terminated by the Tailscale ingress proxy.
+            - { name: PROXY_TLS, value: "false" }
+            - { name: PROXY_HTTP_ADDR, value: 0.0.0.0:9200 }
+            - { name: OC_INSECURE, value: "false" }
+            # WebDAV/CLI clients (rclone, curl) authenticate with a password
+            # instead of the browser OIDC flow.
+            - { name: PROXY_ENABLE_BASIC_AUTH, value: "true" }
+            - { name: IDM_CREATE_DEMO_USERS, value: "false" }
+            - name: IDM_ADMIN_PASSWORD
+              valueFrom:
+                secretKeyRef: { name: opencloud-admin, key: password }
+          ports: [{ name: http, containerPort: 9200 }]
+          volumeMounts:
+            - { name: data, mountPath: /var/lib/opencloud }
+            - { name: config, mountPath: /etc/opencloud }
+          startupProbe:
+            httpGet: { path: /healthz, port: http }
+            periodSeconds: 10
+            failureThreshold: 30
+          readinessProbe:
+            httpGet: { path: /healthz, port: http }
+            periodSeconds: 10
+          livenessProbe:
+            httpGet: { path: /healthz, port: http }
+            periodSeconds: 30
+            failureThreshold: 5
+          resources:
+            requests: { cpu: 200m, memory: 512Mi }
+            limits: { memory: 2Gi }
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: opencloud-data
+        - name: config
+          persistentVolumeClaim:
+            claimName: opencloud-config

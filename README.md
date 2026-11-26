@@ -17,6 +17,7 @@ k8s/
     headlamp/      Headlamp UI (tailnet only)
     immich/        photo + video library (T7 SSD, tailnet only)
     nulis/         nulis.saugi.me
+    opencloud/     file archive (T7 SSD, tailnet only)
     siti/          telegram bot
   bootstrap/       Argo CD ApplicationSet + repo-secret template
 scripts/           docker.sh, k8s.sh, k8s-secrets.sh
@@ -78,17 +79,49 @@ Photos and videos at `https://immich.starling-tilapia.ts.net` — tailnet only,
 certificate issued by the Tailscale operator (`ingressClassName: tailscale`).
 No public Cloudflare hostname.
 
-The library lives on the external Samsung PSSD T7, mounted from `/etc/fstab` at
-`/srv/t7` (exFAT, `nofail`) with media in `/srv/t7/immich/media` and the ML model
-cache in `/srv/t7/immich/ml-cache`. PostgreSQL is the one piece that stays on the
-NVMe: Immich's image initialises `PGDATA` with `--data-checksums` and 0700
-permissions, which exFAT cannot honour. Both SSD paths are `hostPath` PVs of
-type `Directory`, so an unplugged disk fails the pod instead of starting an
-empty library on the boot disk, and the server's `require-ssd` initContainer
-re-checks the filesystem type before Immich runs.
+The library lives on the external Samsung PSSD T7, ext4, mounted from
+`/etc/fstab` at `/srv/t7` (`nofail`) with media in `/srv/t7/immich/media` and the
+ML model cache in `/srv/t7/immich/ml-cache`. PostgreSQL is the one piece that
+stays on the NVMe: Immich's image initialises `PGDATA` with `--data-checksums`
+and 0700 permissions, so it wants a local journaled filesystem rather than the
+shared data disk.
+
+The SSD paths are `hostPath` PVs of type `Directory`, so an unplugged disk fails
+the pod instead of starting an empty library on the boot disk, and the server's
+`require-ssd` initContainer refuses to start unless `/data` is ext4 (the root
+filesystem is btrfs).
 
 The DB password is generated into `secrets/k8s-bootstrap.env` (`IMMICH_DB_PW`)
 and seeded as the `immich-db` Secret; nothing is committed.
+
+### OpenCloud
+
+File archive at `https://cloud.starling-tilapia.ts.net` — tailnet only. One
+upstream container (`opencloudeu/opencloud-rolling`) with the built-in IDM; the
+community Helm charts are archived and unsupported, so these manifests are
+hand-written like the rest of `k8s/apps`.
+
+Its posix storage driver needs extended attributes, which is one of the reasons
+the T7 is ext4. The dataset lives in `/srv/t7/opencloud/{data,config}` on
+`hostPath` PVs of type `Directory`. Admin user is `admin`; the password is
+`OPENCLOUD_ADMIN_PW` in `secrets/k8s-bootstrap.env`. WebDAV basic auth is
+enabled, so `rclone`/`curl` can upload without the browser OIDC flow.
+
+### The T7 disk
+
+`/srv/t7` is the external Samsung PSSD T7 (931 GB), and it holds every byte of
+both apps' payload:
+
+| Path | Contents |
+| --- | --- |
+| `/srv/t7/immich/media` | Immich originals, thumbs, encoded video, DB dumps |
+| `/srv/t7/immich/ml-cache` | ML models (~2 GB) |
+| `/srv/t7/opencloud/data` | OpenCloud decomposedfs dataset + IDM state |
+| `/srv/t7/opencloud/config` | generated `opencloud init` config |
+
+It was exFAT until 2026-11-26; ext4 gives journaling, POSIX ownership,
+case-sensitivity and xattrs. No TRIM reaches the disk over this USB bridge, so
+the enclosure's own garbage collection does the work — nothing to schedule.
 
 ## Secrets policy
 

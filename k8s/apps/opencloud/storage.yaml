@@ -1,0 +1,57 @@
+# OpenCloud's default "posix" storage driver needs a real POSIX filesystem with
+# extended attributes, which is why this disk was reformatted to ext4.
+#
+# Two paths so the container needs no subPath tricks: the dataset
+# (decomposedfs blobs, IDM state) and the generated config (`opencloud init`
+# writes service secrets into /etc/opencloud).
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: opencloud-data
+spec:
+  capacity: { storage: 700Gi }
+  accessModes: [ReadWriteOnce]
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: t7-ssd
+  hostPath:
+    path: /srv/t7/opencloud/data
+    # Directory, not DirectoryOrCreate: an unmounted T7 must fail the pod
+    # rather than silently start an empty cloud on the NVMe.
+    type: Directory
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: opencloud-data
+  namespace: opencloud
+spec:
+  accessModes: [ReadWriteOnce]
+  storageClassName: t7-ssd
+  volumeName: opencloud-data
+  resources:
+    requests: { storage: 700Gi }
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: opencloud-config
+spec:
+  capacity: { storage: 1Gi }
+  accessModes: [ReadWriteOnce]
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: t7-ssd
+  hostPath:
+    path: /srv/t7/opencloud/config
+    type: Directory
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: opencloud-config
+  namespace: opencloud
+spec:
+  accessModes: [ReadWriteOnce]
+  storageClassName: t7-ssd
+  volumeName: opencloud-config
+  resources:
+    requests: { storage: 1Gi }

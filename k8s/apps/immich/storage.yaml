@@ -1,4 +1,4 @@
-# Media lives on the external Samsung PSSD T7 (exFAT, mounted at /srv/t7 on
+# Media lives on the external Samsung PSSD T7 (ext4, mounted at /srv/t7 on
 # the node). hostPath (not local-path) so photo data stays readable outside the
 # cluster and outlives a reinstall.
 #
