@@ -21,7 +21,8 @@ spec:
       initContainers:
         # /data must really be the T7. Without this, an unplugged disk turns
         # into an empty directory on the NVMe and Immich happily starts a new
-        # empty library there.
+        # empty library there. BusyBox stat(1) cannot name exFAT, so read the
+        # mount table instead.
         - name: require-ssd
           image: busybox:1.37
           command:
@@ -29,11 +30,13 @@ spec:
             - -c
             - |
               set -eu
-              fs="$(stat -f -c %T /data)"
+              fs="$(awk '$2 == "/data" { print $3 }' /proc/mounts)"
               if [ "$fs" != "exfat" ]; then
-                echo "refusing to start: /data is '$fs', expected the exFAT T7 (mount /srv/t7)" >&2
+                echo "refusing to start: /data is '${fs:-not mounted}', expected the exFAT T7 (mount /srv/t7)" >&2
                 exit 1
               fi
+          volumeMounts:
+            - { name: media, mountPath: /data }
         - name: wait-for-backends
           image: busybox:1.37
           command:
