@@ -101,6 +101,11 @@ upstream container (`opencloudeu/opencloud-rolling`) with the built-in IDM; the
 community Helm charts are archived and unsupported, so these manifests are
 hand-written like the rest of `k8s/apps`.
 
+The pod carries a `hostAliases` entry for its own public name: `*.ts.net` is
+Tailscale MagicDNS, which cluster DNS cannot resolve, and the proxy fetches
+`{OC_URL}/.well-known/openid-configuration` on every bearer-token check. Without
+it, web login fails while basic auth (WebDAV/rclone) keeps working.
+
 Its posix storage driver needs extended attributes, which is one of the reasons
 the T7 is ext4. The dataset lives in `/srv/t7/opencloud/{data,config}` on
 `hostPath` PVs of type `Directory`. Admin user is `admin`; the password is

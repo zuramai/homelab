@@ -24,6 +24,14 @@ spec:
     spec:
       # The `opencloud` Service would inject OPENCLOUD_PORT=tcp://… into the pod.
       enableServiceLinks: false
+      # The proxy verifies bearer tokens by fetching
+      # {OC_URL}/.well-known/openid-configuration, but *.ts.net is Tailscale
+      # MagicDNS (100.100.100.100) and is not resolvable by cluster DNS, so
+      # every web login failed with "account inactive / routine safety log out".
+      # Pin the node's own tailnet IP; update it if that address ever changes.
+      hostAliases:
+        - ip: 100.117.199.4
+          hostnames: [cloud.starling-tilapia.ts.net]
       securityContext:
         # Upstream container runs as 1000:1000; keep that so the files on the
         # T7 stay owned by the same uid the host uses.
