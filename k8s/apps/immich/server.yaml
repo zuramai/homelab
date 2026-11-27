@@ -86,8 +86,11 @@ spec:
             periodSeconds: 30
             failureThreshold: 5
           resources:
+            # 4 GiB OOM-killed the API 11 times during the first bulk import
+            # (thumbnails + transcodes + face jobs at once). 8 GiB on a 31 GiB
+            # host leaves headroom for the ML container's 6 GiB.
             requests: { cpu: 200m, memory: 1Gi }
-            limits: { memory: 4Gi }
+            limits: { memory: 8Gi }
       volumes:
         - name: media
           persistentVolumeClaim:
