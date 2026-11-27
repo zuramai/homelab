@@ -68,8 +68,10 @@ spec:
             # One binary runs proxy, storage, IDM, search and postprocessing.
             # 2 GiB OOM-killed it under bulk uploads (73 restarts); 8 GiB leaves
             # room for the upload reassembly buffers on a 31 GiB host.
-            requests: { cpu: 200m, memory: 1Gi }
-            limits: { memory: 8Gi }
+            # CPU is capped at 6 cores: unthrottled bulk imports drove the
+            # package to 92 C on a 20-core box and stalled the whole host.
+            requests: { cpu: 500m, memory: 1Gi }
+            limits: { cpu: "6", memory: 8Gi }
       volumes:
         - name: data
           persistentVolumeClaim:
