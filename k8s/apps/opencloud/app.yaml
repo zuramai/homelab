@@ -16,6 +16,10 @@ metadata:
   name: opencloud
 spec:
   replicas: 1
+  # Rolling updates would briefly run two pods on the same RWO dataset, and
+  # OpenCloud keeps a BoltDB (idm) plus per-instance IDP keys there. Recreate
+  # guarantees a single writer; brief downtime is the better trade.
+  strategy: { type: Recreate }
   selector:
     matchLabels: { app: opencloud }
   template:
