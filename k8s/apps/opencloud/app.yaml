@@ -65,8 +65,11 @@ spec:
             periodSeconds: 30
             failureThreshold: 5
           resources:
-            requests: { cpu: 200m, memory: 512Mi }
-            limits: { memory: 2Gi }
+            # One binary runs proxy, storage, IDM, search and postprocessing.
+            # 2 GiB OOM-killed it under bulk uploads (73 restarts); 8 GiB leaves
+            # room for the upload reassembly buffers on a 31 GiB host.
+            requests: { cpu: 200m, memory: 1Gi }
+            limits: { memory: 8Gi }
       volumes:
         - name: data
           persistentVolumeClaim:
