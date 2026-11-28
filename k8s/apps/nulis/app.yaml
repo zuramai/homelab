@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: nulis
-          image: ghcr.io/zuramai/nulis:1.0.0
+          image: ghcr.io/zuramai/nulis:1.0.1
           ports: [{ containerPort: 3000 }]
           env:
             # NUXT_MONGODB_URI contains a password, so it comes from nulis-secrets (Infisical, 11.4).
